@@ -13,14 +13,15 @@
      \/__/\/__/  \/___/\__/  \/___/\__/  \/__/   \/_____/   \/___/_\  \
                                                                /\_____/
                                                                \/____/
-*/
+terminal colours
+----------------
+ #66ff66 green
+ #b700b7 purple
+ #ffa7ff pink
+ #141414 black background
+ #373737 white highlight
+ #680036 red highlight                                                          */
 
-
-// terminal colours:
-// green: #66ff66
-// purple: b700b7
-// black-bg: #141414
-// white-highligh: #373737
 
 
 
@@ -111,12 +112,12 @@
 // // prints the file path to the console log
 // // console.log("filepath: " + process.argv[2] + "\n");
 
-// var fileContents = fs.readFileSync(process.argv[2]);    // variable for the buffer for the file
-// var fileAsString = fileContents.toString();             // creates a string from the buffer
+// var fileContents = fs.readFileSync(process.argv[2]);    // variable for buffer of file
+// var fileAsString = fileContents.toString();             // creates string from buffer
 // // console.log(fileAsString);
 
 // // note that "\n" is the delimiter
-// var fileAsArray = fileAsString.split("\n");             // creates an array, each item is a paragraph
+// var fileAsArray = fileAsString.split("\n");             // create array of paragraphs
 // // console.log(fileAsArray);
 
 // var numberOfNewLines = fileAsArray.length - 1;
@@ -258,34 +259,83 @@
 ##    ###   ##/  ##                     ####        ##       ##/  ##
 ########     /##                          ###       ##        /##
 #######     / ###                           ###     ##       / ###
-##         /   ###                            ###   ##      /   ###
+##         /   ###                        ##  ###   ##      /   ###
 ###     / /     ###      #              ###    ##   ##     /     ###
  ######/ /       ### /  ###              ####  /    ### / /       ### /
   ##### /         ##/    #                 ###/      ##/ /         ##/          */
 
 
-// loop-counter and modules
-var i = 0;
-var module = require("./module1.js");   // ".js" is optional and can be omitted
+// // loop-counter and modules
+// var i = 0;
+// var module = require("./module1.js");   // ".js" is optional and can be omitted
 
-// directory and filetype to sort by
-var directory = process.argv[2];
-var filetype = process.argv[3];
+// // directory and filetype to sort by
+// var directory = process.argv[2];
+// var filetype = process.argv[3];
 
-// call function from module1.js
-module(directory, filetype, printFiles);
-// used to be "module.getSortedFiles", but learnyounode wants only one function exported
+// // call function from module1.js
+// module(directory, filetype, printFiles);
+// // used to be "module.getSortedFiles", but learnyounode wants only one function exported
 
-// run after getSortedFiles() is complete
-function printFiles(error, data) {
+// // run after getSortedFiles() is complete
+// function printFiles(error, data) {
+//     if (error) {
+//         return console.error(error);
+//     }
+
+//     // logs all items in array (passed from getSortedFiles function)
+//     for (i = 0; i < data.length; i++) {
+//         console.log(data[i]);
+//     }
+// }
+
+
+
+
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
+
+
+
+/*             /###      /##   ##    ###      /##  ###  /###
+              /  ####   / ###   ##    ###    / ###  ###/ ####
+             ##   ###  /   ###  ##     ###  /   ###  ##   ###
+            ####      ##    ### ##      ## ##    ### ##    ##
+              ###     ########  ##      ## ########  ##    ##
+                ###   #######   ##      ## #######   ##    ##
+              ##  ### ##        ##      ## ##        ##    ##
+            ###    ## ###     / ##      /  ###     / ##    ##
+             ####  /   ######/   ######/    ######/  ###   ###
+               ###/     #####     #####      #####    ###   ###                 */
+
+
+var http = require("http");
+var url = process.argv[2];
+
+console.log(url);
+
+http.get(url, callback);
+
+function callback(response) {
+    response.on("data", respondToData(response));
+    response.on("error", respondToError(response));
+    response.on("end", respondToEnd(response));
+}
+
+function respondToData(data) {
+    var dataAsString = data.setEncoding("utf8");
+    console.log(dataAsString);
+}
+
+function respondToError(error) {
     if (error) {
-        return console.error(error);    // should say: "bleh (from module1.js) - <error here>"
+        return console.log(error);
     }
+}
 
-    // logs all items in array (passed from getSortedFiles function)
-    for (i = 0; i < data.length; i++) {
-        console.log(data[i]);
-    }
+function respondToEnd(response) {
+    response.end();
 }
 
 
